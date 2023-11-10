@@ -134,6 +134,7 @@ const modalCategory = document.getElementById("category");
 const inputText = document.querySelector("#form__modal--deux #name");
 
 addPicture.addEventListener("change", (event) => {
+  btnChangeColor();
   const file = event.target.files[0];
   if (file) {
     const reader = new FileReader();
@@ -147,6 +148,7 @@ addPicture.addEventListener("change", (event) => {
     reader.readAsDataURL(file);
   }
 });
+const formModalDeux = document.getElementById("form__modal--deux");
 
 ///// ENVOIE DES TRAVAUX
 async function sendWork() {
@@ -187,18 +189,21 @@ async function sendWork() {
     }
   });
 }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 function btnChangeColor() {
   if (
     inputText.value !== "" &&
-    imgModal.src !== "assets/icons/picture-svgrepo-com 1.png" &&
-    modalCategory.value !== "0"
+    addPicture.files.length !== 0 &&
+    modalCategory.value !== ""
   ) {
     formValider.style.background = "#1D6154";
   } else {
     formValider.style.background = "#a7a7a7";
   }
+  console.log(modalCategory.value);
 }
+inputText.addEventListener("change", btnChangeColor);
+modalCategory.addEventListener("change", btnChangeColor);
 
 function checkLoggin() {
   const login = document.querySelector("#login");
@@ -249,6 +254,11 @@ modalAddBtn.addEventListener("click", () => {
   // btn ajout au click modal 1 se ferme et ouvre la modal 2
   modalUn.close();
   modalDeux.showModal();
+  formModalDeux.reset();
+  formParagraph.style.display = "block";
+  labelPicture.style.display = "block";
+  imgModal.src = "assets/icons/picture-svgrepo-com 1.png";
+  inputFileContainer.style.padding = "0.81rem 0 1.19rem";
 });
 
 modalReturn.addEventListener("click", () => {
@@ -267,7 +277,6 @@ async function init() {
   injectCategories(categories); //inject les categories
   categories.forEach(() => filtreWork({ id: 0, name: "Tous" })); // commence avec tous
   sendWork(); //ajout des nouveaux travaux
-  btnChangeColor();
 }
 
 init();
