@@ -9,7 +9,7 @@ function login() {
     const response = await fetch("http://localhost:5678/api/users/login", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data), //convertie en json
     });
     console.log(response);
     if (response.ok) {
